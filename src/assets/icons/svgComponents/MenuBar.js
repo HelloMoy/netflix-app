@@ -1,4 +1,4 @@
-export default function MenuBar({className}) {
+const MenuBar = ({ className }) => {
     return (
         <svg
             version="1.0"
@@ -18,5 +18,7 @@ export default function MenuBar({className}) {
 18 -103 2 -154 -1 -158 -9z"/>
             </g>
         </svg>
-    )
+    );
 };
+
+export default MenuBar;

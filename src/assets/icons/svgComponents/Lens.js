@@ -1,4 +1,4 @@
-export default function Lens({ className }) {
+const Lens = ({ className }) => {
     return (
         <svg
             version="1.0"
@@ -21,4 +21,6 @@ export default function Lens({ className }) {
             </g>
         </svg>
     );
-}
+};
+
+export default Lens;
