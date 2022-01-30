@@ -1,0 +1,9 @@
+.movieCarousels {
+    padding-left: 20px;
+}
+
+@media screen and (max-width: 500px) {
+    .movieCarousels {
+        padding-left: 5px;
+    }
+}
