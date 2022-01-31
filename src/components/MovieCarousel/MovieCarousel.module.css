@@ -16,6 +16,7 @@
 
 .movieCarousel__title {
     padding-bottom: 5px;
+    user-select: none; 
 }
 
 .movie {
