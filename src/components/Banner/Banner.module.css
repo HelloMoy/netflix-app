@@ -8,6 +8,7 @@
     height: 100%;
     padding-left: 20%;
     position: relative;
+    overflow: hidden;
 }
 
 .banner__image {
