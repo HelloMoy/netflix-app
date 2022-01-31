@@ -3,10 +3,10 @@
 }
 
 .movieCarousel__movies {
+    list-style: none;
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
-    list-style: none;
     scrollbar-width: none;
 }
 
