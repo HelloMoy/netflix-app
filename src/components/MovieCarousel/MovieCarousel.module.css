@@ -2,12 +2,17 @@
     padding-bottom: 20px;
 }
 
+.movieCarousel__container{
+    position: relative;
+}
+
 .movieCarousel__movies {
     list-style: none;
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 .movieCarousel__movies::-webkit-scrollbar {
@@ -16,7 +21,7 @@
 
 .movieCarousel__title {
     padding-bottom: 5px;
-    user-select: none; 
+    user-select: none;
 }
 
 .movie {
@@ -35,6 +40,29 @@
     height: 100%;
     object-fit: fill;
     border-radius: 5px;
+}
+
+.movieCarousel__scrollButton {
+    height: 100%;
+    min-width: 50px;
+    position: absolute;
+    top: 0;
+    display: none;
+}
+
+.movieCarousel__showScrollButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+}
+
+.movieCarousel__scrollButtonText {
+    user-select: none;
+}
+
+.movieCarousel__scrollButton__forward{
+    right: 0;
 }
 
 @media screen and (max-width: 500px) {
