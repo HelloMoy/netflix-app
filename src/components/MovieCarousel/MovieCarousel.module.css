@@ -2,7 +2,7 @@
     padding-bottom: 20px;
 }
 
-.movieCarousel__container{
+.movieCarousel__container {
     position: relative;
 }
 
@@ -24,25 +24,11 @@
     user-select: none;
 }
 
-.movie {
-    min-width: 190px;
-    max-width: 190px;
-    height: 250px;
-    padding-right: 10px;
-}
-
 .movieCarousel__title {
     font-size: 20px;
 }
 
-.movie__image {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    border-radius: 5px;
-}
-
-.movieCarousel__scrollButtonIconContainer{
+.movieCarousel__scrollButtonIconContainer {
     width: 50%;
     display: flex;
     justify-content: center;
@@ -57,7 +43,7 @@
     display: none;
 }
 
-.movieCarousel__scrollButtonFrontLayer{
+.movieCarousel__scrollButtonFrontLayer {
     position: absolute;
     top: 0;
     height: 100%;
@@ -71,28 +57,21 @@
     background-color: #00000099;
 }
 
-.movieCarousel__scrollButton__forward{
+.movieCarousel__scrollButton__forward {
     right: 0;
 }
 
-.movieCarousel__scrollButtonIcon{
+.movieCarousel__scrollButtonIcon {
     fill: white;
 }
 
-.movieCarousel__scrollButtonIcon__back{
+.movieCarousel__scrollButtonIcon__back {
     transform: rotate(180deg);
 }
 
 @media screen and (max-width: 500px) {
     .movieCarousel {
         padding-bottom: 10px;
-    }
-
-    .movie {
-        min-width: 120px;
-        max-width: 120px;
-        height: 160px;
-        padding-right: 5px;
     }
 
     .movieCarousel__title {

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Arrow from '../../assets/icons/svgComponents/Arrow';
 import useElementOnScreen from '../../customHooks/useElementOnScreen';
-import { movieImagePath } from '../../paths/links';
 import { addFirstAndLastElementProperty, filterNullPosterAndBackdropPath, getData, moveScrollHorizontal } from '../../services/';
 import Loader from '../Loader/';
+import Movie from "../Movie/";
 import styles from './MovieCarousel.module.css';
 
 const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }) => {
@@ -77,40 +77,14 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
                         </div>
                         <ul className={styles.movieCarousel__movies} ref={movieCarouselRef}
                         >
-                            {movies.map((movie) => {
-                                if (movie.firstElement) {
-                                    return (
-                                        <li className={styles.movie} key={movie.id} ref={movieCarouselFirstChildRef}>
-                                            <img
-                                                className={styles.movie__image}
-                                                src={`${movieImagePath}${movie.poster_path}`}
-                                                alt={movie.title}
-                                            />
-                                        </li>
-                                    )
-                                } else if (movie.lastElement) {
-                                    return (
-                                        <li className={styles.movie} key={movie.id} ref={movieCarouselLastChildRef}>
-                                            <img
-                                                className={styles.movie__image}
-                                                src={`${movieImagePath}${movie.poster_path}`}
-                                                alt={movie.title}
-                                            />
-                                        </li>
-                                    )
-                                }
-                                else {
-                                    return (
-                                        <li className={styles.movie} key={movie.id}>
-                                            <img
-                                                className={styles.movie__image}
-                                                src={`${movieImagePath}${movie.poster_path}`}
-                                                alt={movie.title}
-                                            />
-                                        </li>
-                                    )
-                                }
-                            })}
+                            {movies.map((movie) => (
+                                <Movie
+                                    movie={movie}
+                                    key={movie.id}
+                                    firstMovieRef={movieCarouselFirstChildRef}
+                                    lastMovieRef={movieCarouselLastChildRef}
+                                />
+                            ))}
                         </ul>
                         <div
                             className={
