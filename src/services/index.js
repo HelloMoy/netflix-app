@@ -33,7 +33,17 @@ export const isMobileDevice = () => {
 };
 
 
-const filterPosterAndBackdropPathNull = (movies) => {
+export const filterNullPosterAndBackdropPath = (movies) => {
     const filteredMovies = movies.filter((movie) => (movie.poster_path && movie.backdrop_path));
     return filteredMovies;
+}
+
+export const addFirstAndLastElementProperty = (array) => {
+    const firstElement = array[0];
+    const firstArrayElement = { firstElement: true, ...firstElement };
+    const lastElement = array[array.length - 1];
+    const lastArrayElement = { lastElement: true, ...lastElement };
+    array[0] = firstArrayElement;
+    array[array.length - 1] = lastArrayElement;
+    return array;
 }

@@ -8,7 +8,8 @@ const Lens = ({ className }) => {
             viewBox="0 0 96.000000 98.000000"
             preserveAspectRatio="xMidYMid meet">
 
-            <g transform="translate(0.000000,98.000000) scale(0.100000,-0.100000)"
+            <g
+                transform="translate(0.000000,98.000000) scale(0.100000,-0.100000)"
                 stroke="none">
                 <path d="M282 941 c-104 -39 -179 -110 -230 -219 -24 -50 -27 -69 -27 -157 0
    -93 2 -105 33 -167 42 -86 109 -153 192 -192 60 -29 73 -31 170 -31 98 0 109

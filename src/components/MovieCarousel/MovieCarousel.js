@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import Arrow from '../../assets/icons/svgComponents/Arrow';
 import useElementOnScreen from '../../customHooks/useElementOnScreen';
 import { movieImagePath } from '../../paths/links';
-import { getData, moveScrollHorizontal } from '../../services/';
+import { addFirstAndLastElementProperty, filterNullPosterAndBackdropPath, getData, moveScrollHorizontal } from '../../services/';
 import Loader from '../Loader/';
 import styles from './MovieCarousel.module.css';
 
@@ -17,18 +18,14 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
     useEffect(() => {
 
         const getMovies = async () => {
-            const response = await getData(moviesCategoryPath);
-            const filteredResponse = response.results.filter((movie) => (movie.poster_path && movie.backdrop_path));
-            const firstElement = filteredResponse[0];
-            const firstArrayElement = { firstElement: true, ...firstElement };
-            const lastElement = filteredResponse[filteredResponse.length - 1];
-            const lastArrayElement = { lastElement: true, ...lastElement };
-            filteredResponse[0] = firstArrayElement;
-            filteredResponse[response.results.length - 1] = lastArrayElement;
-            setMovies(filteredResponse);
+            const movies = await getData(moviesCategoryPath);
+            const moviesFiltered = filterNullPosterAndBackdropPath(movies.results);
+            const moviesWithFirstAndLastElementProperty = addFirstAndLastElementProperty(moviesFiltered);
+            setMovies(moviesWithFirstAndLastElementProperty);
         };
 
         getMovies();
+
     }, []);
 
     const useElementOnScreenOptions = {
@@ -40,11 +37,19 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
 
     const handlerMoveHorizaontalScrolling = (event) => {
         const elementClassList = event.target.classList;
-        const forwardClass = 'forward';
-        const backClass = 'back';
-        const offsetPixels = 1000;
+        const forwardClass = 'movieCarousel__scrollButtonFrontLayer__forward';
+        const backClass = 'movieCarousel__scrollButtonFrontLayer__back';
+        const offsetPixels = 800;
         moveScrollHorizontal(elementClassList, movieCarouselRef, forwardClass, backClass, offsetPixels);
     }
+
+    const hanlerShowScrollBackButton = () => {
+        return (isNotMobileDevice && carouselFirstItemIsHidden && onHoverCarousel)
+    };
+
+    const hanlerShowScrollForwardButton = () => {
+        return (isNotMobileDevice && carouselLastItemIsHidden && onHoverCarousel)
+    };
 
 
     return (
@@ -59,14 +64,16 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
                     >
                         <div
                             className={
-                                `${styles.movieCarousel__scrollButton} back ${(isNotMobileDevice && carouselFirstItemIsHidden && onHoverCarousel) ? styles.movieCarousel__showScrollButton : ''}`
+                                `${styles.movieCarousel__scrollButton} ${(hanlerShowScrollBackButton()) ? styles.movieCarousel__showScrollButton : ''}`
                             }
                             onClick={handlerMoveHorizaontalScrolling}
                         >
-                            <div
-                                className={`${styles.movieCarousel__scrollButtonText} back`}
-                            >Previous
+                            <div className={`${styles.movieCarousel__scrollButtonIconContainer}`}>
+                                <Arrow
+                                    className={`${styles.movieCarousel__scrollButtonIcon} ${styles.movieCarousel__scrollButtonIcon__back}`}
+                                />
                             </div>
+                            <div className={`${styles.movieCarousel__scrollButtonFrontLayer} movieCarousel__scrollButtonFrontLayer__back`}></div>
                         </div>
                         <ul className={styles.movieCarousel__movies} ref={movieCarouselRef}
                         >
@@ -107,11 +114,16 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
                         </ul>
                         <div
                             className={
-                                `${styles.movieCarousel__scrollButton} ${styles.movieCarousel__scrollButton__forward} forward ${(isNotMobileDevice && carouselLastItemIsHidden && onHoverCarousel) ? styles.movieCarousel__showScrollButton : ''}`
+                                `${styles.movieCarousel__scrollButton} ${styles.movieCarousel__scrollButton__forward}  ${(hanlerShowScrollForwardButton()) ? styles.movieCarousel__showScrollButton : ''}`
                             }
                             onClick={handlerMoveHorizaontalScrolling}
                         >
-                            <div className={`${styles.movieCarousel__scrollButtonText} forward`}>Next</div>
+                            <div className={`${styles.movieCarousel__scrollButtonIconContainer} `}>
+                                <Arrow
+                                    className={`${styles.movieCarousel__scrollButtonIcon} `}
+                                />
+                            </div>
+                            <div className={`${styles.movieCarousel__scrollButtonFrontLayer} movieCarousel__scrollButtonFrontLayer__forward`}></div>
                         </div>
                     </div>
                 </>
