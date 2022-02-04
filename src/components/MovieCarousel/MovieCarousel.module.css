@@ -28,47 +28,6 @@
     font-size: 20px;
 }
 
-.movieCarousel__scrollButtonIconContainer {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.movieCarousel__scrollButton {
-    height: 100%;
-    width: 40px;
-    position: absolute;
-    top: 0;
-    display: none;
-}
-
-.movieCarousel__scrollButtonFrontLayer {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.movieCarousel__showScrollButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #00000099;
-}
-
-.movieCarousel__scrollButton__forward {
-    right: 0;
-}
-
-.movieCarousel__scrollButtonIcon {
-    fill: white;
-}
-
-.movieCarousel__scrollButtonIcon__back {
-    transform: rotate(180deg);
-}
-
 @media screen and (max-width: 500px) {
     .movieCarousel {
         padding-bottom: 10px;
