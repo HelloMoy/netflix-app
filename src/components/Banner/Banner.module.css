@@ -1,5 +1,7 @@
+@import '../../globalVariables.css';
+
 .banner__container {
-    height: calc(100vh - 120px);
+    height: calc(100vh - var(--header-height) - var(--header-height));
     position: relative;
 }
 
