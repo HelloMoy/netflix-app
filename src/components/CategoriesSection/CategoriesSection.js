@@ -1,9 +1,26 @@
+import { useEffect, useState } from 'react';
+import { genders as gendersLink } from '../../paths/links';
+import { getData } from '../../services';
+
 import styles from './CategoriesSection.module.css';
 
 const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection }) => {
 
+    const [genders, setGenders] = useState();
+
+    useEffect(() => {
+        const getGenders = async () => {
+            const gendersList = await getData(gendersLink);
+            setGenders(gendersList.genres);
+        };
+
+        getGenders();
+
+    }, []);
+
+
     const handlerClickOnBackground = (element) => {
-        if(element.target.classList.contains(styles.categories)){
+        if (element.target.classList.contains(styles.categories)) {
             toggleShowCategoriesSection();
         }
     }
@@ -13,126 +30,16 @@ const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection 
             onClick={handlerClickOnBackground}
         >
             <div className={styles.category__items}>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
-                <div className={styles.category__item}>
-                    <p className={styles.category__textItem}>
-                        Horror
-                    </p>
-                </div>
+                {
+                    genders &&
+                    genders.map((gender) => (
+                        <div className={styles.category__item} key={gender.id}>
+                            <p className={styles.category__textItem}>
+                                {gender.name}
+                            </p>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );

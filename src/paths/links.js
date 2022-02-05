@@ -22,3 +22,5 @@ export const Fantasy = {
 };
 
 export const movieImagePath = `https://image.tmdb.org/t/p/w200`;
+
+export const genders = 'https://api.themoviedb.org/3/genre/movie/list?api_key=df9ac6d353bf12ec1a980d483f2ac60d&language=en-US';
