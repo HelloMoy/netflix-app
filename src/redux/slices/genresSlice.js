@@ -1,6 +1,6 @@
 import { genresLink, getRouteByGenre } from '../../paths/links';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getData } from '../../services';
+import { getData, stringCamelize } from '../../services';
 
 export const getGenresAsync = createAsyncThunk(
     'genres/fetchGenres',
@@ -31,6 +31,7 @@ export const genresSlice = createSlice({
                         {
                             id: element.id,
                             genderName: element.name,
+                            genderNameCamelCase: stringCamelize(element.name),
                             moviesLink: getRouteByGenre(element.id),
                             movies: [],
                         }

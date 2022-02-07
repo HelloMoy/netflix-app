@@ -27,6 +27,7 @@ const Home = () => {
                         <MovieCarousel
                             moviesCategoryPath={gender.moviesLink}
                             moviesCategory={gender.genderName}
+                            moviesCategoryCamelize={gender.genderNameCamelCase}
                             isNotMobileDevice={isNotMobileDevice}
                         />
                     </div >)

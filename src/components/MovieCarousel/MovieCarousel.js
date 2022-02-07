@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { addFirstAndLastElementProperty, filterNullPosterAndBackdropPath, getData } from '../../services/';
+import { getMoviesAsync } from '../../redux/slices/moviesSlice.';
 import CarouselArrowButton from '../CarouselArrowButton/';
 import Loader from '../Loader/';
 import Movie from "../Movie/";
+import { useDispatch } from 'react-redux';
 import styles from './MovieCarousel.module.css';
 
-const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }) => {
+const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice, moviesCategoryCamelize }) => {
 
     const [movies, setMovies] = useState(null);
     const [onHoverCarousel, setOnHoverCarousel] = useState(false);
@@ -13,6 +15,8 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
     const movieCarouselRef = useRef();
     const movieCarouselFirstChildRef = useRef();
     const movieCarouselLastChildRef = useRef();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
 
@@ -22,6 +26,8 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice }
             const moviesWithFirstAndLastElementProperty = addFirstAndLastElementProperty(moviesFiltered);
             setMovies(moviesWithFirstAndLastElementProperty);
         };
+
+        dispatch(getMoviesAsync({moviesCategoryPath, moviesCategoryCamelize}));
 
         getMovies();
 

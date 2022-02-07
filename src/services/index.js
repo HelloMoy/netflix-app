@@ -47,3 +47,9 @@ export const addFirstAndLastElementProperty = (array) => {
     array[array.length - 1] = lastArrayElement;
     return array;
 }
+
+export const stringCamelize = (stringToCamelize) => {
+    return stringToCamelize.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+/g, '');
+}

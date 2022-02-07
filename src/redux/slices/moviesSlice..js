@@ -1,14 +1,12 @@
-import { genresLink, getRouteByGenre } from '../../paths/links';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getData } from '../../services';
 
 export const getMoviesAsync = createAsyncThunk(
-    'genres/fetchGenres',
-    async (link, genre) => {
-        const values = await getData(link);
-        // const valueswithGenre = {};
-        Object.defineProperty(values, 'genre', {value: genre})
-        return values;
+    'movies/fetchMovies',
+    async (movieData) => {
+        const movies = await getData(movieData.moviesCategoryPath);
+        const moviesWithGenre = { ...movies, genre: movieData.moviesCategoryCamelize };
+        return moviesWithGenre;
     }
 );
 
@@ -132,7 +130,6 @@ export const getMoviesAsync = createAsyncThunk(
 export const moviesSlice = createSlice({
     name: 'movies',
     initialState: {
-        value: [],
         status: 'idle',
     },
     reducers: {
@@ -145,7 +142,8 @@ export const moviesSlice = createSlice({
             })
             .addCase(getMoviesAsync.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
-                state.value = action.payload;
+                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], movies: action.payload.results };
+                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], state: 'fulfilled' };
             })
             .addCase(getMoviesAsync.rejected, (state) => {
                 state.status = 'rejected';
@@ -153,6 +151,8 @@ export const moviesSlice = createSlice({
     },
 });
 
-export const { setMovies } = moviesSlice.actions
+export const selectMovies = (state) => state.movies.value;
+
+// export const { setMovies } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
