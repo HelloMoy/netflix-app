@@ -1,23 +1,12 @@
-import { useEffect, useState } from 'react';
-import { genders as gendersLink } from '../../paths/links';
-import { getData } from '../../services';
+import { useSelector } from 'react-redux';
+import {selectGenres, selectGenresStatus} from '../../redux/slices/genresSlice';
 
 import styles from './CategoriesSection.module.css';
 
 const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection }) => {
 
-    const [genders, setGenders] = useState();
-
-    useEffect(() => {
-        const getGenders = async () => {
-            const gendersList = await getData(gendersLink);
-            setGenders(gendersList.genres);
-        };
-
-        getGenders();
-
-    }, []);
-
+    const genders = useSelector(selectGenres);
+    const gendersStatus = useSelector(selectGenresStatus);
 
     const handlerClickOnBackground = (element) => {
         if (element.target.classList.contains(styles.categories)) {
@@ -31,7 +20,7 @@ const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection 
         >
             <div className={styles.category__items}>
                 {
-                    genders &&
+                    gendersStatus === 'fulfilled' &&
                     genders.map((gender) => (
                         <div className={styles.category__item} key={gender.id}>
                             <p className={styles.category__textItem}>
