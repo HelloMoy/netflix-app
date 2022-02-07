@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './pages/Home/';
-import { useDispatch } from 'react-redux'
+import { useDispatch,  } from 'react-redux'
 import { getGenresAsync } from './redux/slices/genresSlice';
 import { useEffect } from 'react';
 
@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     dispatch(getGenresAsync());
   }, []);
-
 
   return (
     <div className="App">

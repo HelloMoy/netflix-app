@@ -24,7 +24,7 @@ const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection 
                     genders.map((gender) => (
                         <div className={styles.category__item} key={gender.id}>
                             <p className={styles.category__textItem}>
-                                {gender.name}
+                                {gender.genderName}
                             </p>
                         </div>
                     ))

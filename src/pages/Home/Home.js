@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import Banner from "../../components/Banner/";
 import Header from "../../components/Header/";
 import MovieCarousel from "../../components/MovieCarousel/";
-import { thriller, War, Fantasy, Horror, trendingThisWeek } from "../../paths/links";
 import { isMobileDevice } from "../../services";
+import { useSelector } from "react-redux";
 import styles from "./Home.module.css";
+import { selectGenres, selectGenresStatus } from "../../redux/slices/genresSlice";
 
 const Home = () => {
+    const genders = useSelector(selectGenres);
+    const gendersStatus = useSelector(selectGenresStatus);
 
     const [isNotMobileDevice, setIsNotMobileDevice] = useState();
 
@@ -18,33 +21,18 @@ const Home = () => {
         <div className={styles.home}>
             <Header />
             <Banner />
-            <div className={styles.movieCarousels}>
-                <MovieCarousel
-                    moviesCategoryPath={trendingThisWeek.path}
-                    moviesCategory={trendingThisWeek.categoryName}
-                    isNotMobileDevice={isNotMobileDevice}
-                />
-                <MovieCarousel
-                    moviesCategoryPath={thriller.path}
-                    moviesCategory={thriller.categoryName}
-                    isNotMobileDevice={isNotMobileDevice}
-                />
-                <MovieCarousel
-                    moviesCategoryPath={War.path}
-                    moviesCategory={War.categoryName}
-                    isNotMobileDevice={isNotMobileDevice}
-                />
-                <MovieCarousel
-                    moviesCategoryPath={Horror.path}
-                    moviesCategory={Horror.categoryName}
-                    isNotMobileDevice={isNotMobileDevice}
-                />
-                <MovieCarousel
-                    moviesCategoryPath={Fantasy.path}
-                    moviesCategory={Fantasy.categoryName}
-                    isNotMobileDevice={isNotMobileDevice}
-                />
-            </div>
+            {gendersStatus === 'fulfilled' &&
+                genders.map((gender) => (
+                    <div className={styles.movieCarousels} key={gender.id}>
+                        <MovieCarousel
+                            moviesCategoryPath={gender.moviesLink}
+                            moviesCategory={gender.genderName}
+                            isNotMobileDevice={isNotMobileDevice}
+                        />
+                    </div >)
+                )
+
+            }
         </div>
     );
 };

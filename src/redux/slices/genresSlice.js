@@ -1,6 +1,6 @@
-import { genresLink, getRouteByGenre} from '../../paths/links';
+import { genresLink, getRouteByGenre } from '../../paths/links';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {getData} from '../../services';
+import { getData } from '../../services';
 
 export const getGenresAsync = createAsyncThunk(
     'genres/fetchGenres',
@@ -10,11 +10,12 @@ export const getGenresAsync = createAsyncThunk(
     }
 );
 
+
 export const genresSlice = createSlice({
     name: 'genres',
     initialState: {
-            value: [],
-            status: 'idle',
+        value: [],
+        status: 'idle',
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -24,21 +25,18 @@ export const genresSlice = createSlice({
             })
             .addCase(getGenresAsync.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
-                state.value = action.payload;
-                const genesrObject = {};
-                action.payload.forEach((element) => (
-                    Object.defineProperty(genesrObject, element.name
-                        , {
-                            value: {
-                                id: element.id,
-                                nameElement: element.name,
-                                link: getRouteByGenre(element.id),
-                                movies: undefined,
-                            }
-                        })
-
-                ));
-                console.log({ genesrObject });
+                const dataWithMoviesLink = [];
+                action.payload.forEach((element) => {
+                    dataWithMoviesLink.push(
+                        {
+                            id: element.id,
+                            genderName: element.name,
+                            moviesLink: getRouteByGenre(element.id),
+                            movies: [],
+                        }
+                    );
+                });
+                state.value = dataWithMoviesLink;
             })
             .addCase(getGenresAsync.rejected, (state) => {
                 state.status = 'rejected';
