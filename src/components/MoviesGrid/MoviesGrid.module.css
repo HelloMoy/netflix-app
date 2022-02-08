@@ -1,0 +1,10 @@
+@import '../../globalVariables.css';
+
+.moviesGrid{
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+}
+
+.moviesGrid__image{
+    min-height: 100px;
+}

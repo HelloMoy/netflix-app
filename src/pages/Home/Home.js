@@ -1,18 +1,19 @@
-import Banner from "../../components/Banner/";
+// import Banner from "../../components/Banner/";
 import Header from "../../components/Header/";
-import MovieCarousel from "../../components/MovieCarousel/";
-import { useSelector } from "react-redux";
-import { selectGenres, selectGenresStatus } from "../../redux/slices/genresSlice";
+// import MovieCarousel from "../../components/MovieCarousel/";
+import MoviesGrid from "../../components/MoviesGrid/";
+// import { useSelector } from "react-redux";
+// import { selectGenres, selectGenresStatus } from "../../redux/slices/genresSlice";
 import styles from "./Home.module.css";
 
 const Home = () => {
-    const genders = useSelector(selectGenres);
-    const gendersStatus = useSelector(selectGenresStatus);
+    // const genders = useSelector(selectGenres);
+    // const gendersStatus = useSelector(selectGenresStatus);
 
     return (
         <div className={styles.home}>
             <Header />
-            <Banner />
+            {/* <Banner />
             {gendersStatus === 'fulfilled' &&
                 genders.map((gender) => (
                     <div className={styles.movieCarousels} key={gender.id}>
@@ -23,8 +24,8 @@ const Home = () => {
                         />
                     </div >)
                 )
-
-            }
+            } */}
+            <MoviesGrid/>
         </div>
     );
 };

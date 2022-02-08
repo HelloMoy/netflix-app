@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addFirstAndLastElementProperty, filterNullPosterAndBackdropPath } from '../../services';
+import { addFirstAndLastElementProperty, concatElementsInArray, filterNullPosterAndBackdropPath, getFirstAndLastElementId } from '../../services';
 import { getData } from '../../services';
 
 export const getMoviesAsync = createAsyncThunk(
@@ -26,11 +26,20 @@ export const moviesSlice = createSlice({
             .addCase(getMoviesAsync.fulfilled, (state, action) => {
 
                 const moviesFiltered = filterNullPosterAndBackdropPath(action.payload.results);
+                const [firstMovieId, lastMovieId] = getFirstAndLastElementId(moviesFiltered);
                 const moviesWithFirstAndLastElementProperty = addFirstAndLastElementProperty(moviesFiltered);
 
+                
+
+                const movieData = {
+                    movies: concatElementsInArray(state[`${action.payload.genre}`]?.movies, moviesWithFirstAndLastElementProperty),
+                    status: 'fulfilled',
+                    firstMovieId,
+                    lastMovieId,
+                }
+
                 state.status = 'fulfilled';
-                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], movies: moviesWithFirstAndLastElementProperty };
-                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], status: 'fulfilled' };
+                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], ...movieData };
             })
             .addCase(getMoviesAsync.rejected, (state) => {
                 state.status = 'rejected';

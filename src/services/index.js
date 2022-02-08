@@ -38,6 +38,12 @@ export const filterNullPosterAndBackdropPath = (movies) => {
     return filteredMovies;
 }
 
+export const getFirstAndLastElementId = (movies) => {
+    const firstElementID = movies[0].id;
+    const lastElementID = movies[movies.length - 1].id;
+    return [firstElementID, lastElementID];
+}
+
 export const addFirstAndLastElementProperty = (array) => {
     const firstElement = array[0];
     const firstArrayElement = { firstElement: true, ...firstElement };
@@ -46,6 +52,12 @@ export const addFirstAndLastElementProperty = (array) => {
     array[0] = firstArrayElement;
     array[array.length - 1] = lastArrayElement;
     return array;
+}
+
+export const concatElementsInArray = (previousItem, currentItem) => {
+    if(previousItem){
+        return [...previousItem, ...currentItem]
+    }else return [...currentItem]
 }
 
 export const stringCamelize = (stringToCamelize) => {
