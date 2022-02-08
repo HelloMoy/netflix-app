@@ -44,16 +44,6 @@ export const getFirstAndLastElementId = (movies) => {
     return [firstElementID, lastElementID];
 }
 
-export const addFirstAndLastElementProperty = (array) => {
-    const firstElement = array[0];
-    const firstArrayElement = { firstElement: true, ...firstElement };
-    const lastElement = array[array.length - 1];
-    const lastArrayElement = { lastElement: true, ...lastElement };
-    array[0] = firstArrayElement;
-    array[array.length - 1] = lastArrayElement;
-    return array;
-}
-
 export const concatElementsInArray = (previousItem, currentItem) => {
     if(previousItem){
         return [...previousItem, ...currentItem]
