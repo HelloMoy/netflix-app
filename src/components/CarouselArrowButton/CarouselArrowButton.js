@@ -2,14 +2,17 @@ import useElementOnScreen from '../../customHooks/useElementOnScreen';
 import { moveScrollHorizontal } from '../../services/';
 import Arrow from '../../assets/icons/svgComponents/Arrow';
 import styles from './CarouselArrowButton.module.css';
+import { useSelector } from 'react-redux';
+import { selectIsMobileDevice } from '../../redux/slices/initialStatusSlice';
 
 const CarouselArrowButton = ({
     isRightArrow = false,
     carouselRef,
     carouselChildRef,
-    isNotMobileDevice,
     onHoverCarousel
 }) => {
+
+    const isMobileDevice = useSelector(selectIsMobileDevice);
 
     const useElementOnScreenOptions = {
         threshold: 1
@@ -26,7 +29,7 @@ const CarouselArrowButton = ({
     }
 
     const hanlerShowArrowButton = () => {
-        return (isNotMobileDevice && carouselChildIsHidden && onHoverCarousel)
+        return (!isMobileDevice && carouselChildIsHidden && onHoverCarousel)
     };
 
     return (

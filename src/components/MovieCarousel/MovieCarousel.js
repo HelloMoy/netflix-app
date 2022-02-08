@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { addFirstAndLastElementProperty, filterNullPosterAndBackdropPath, getData } from '../../services/';
-import { getMoviesAsync } from '../../redux/slices/moviesSlice.';
+import { getMoviesAsync } from '../../redux/slices/moviesSlice';
 import CarouselArrowButton from '../CarouselArrowButton/';
 import Loader from '../Loader/';
 import Movie from "../Movie/";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './MovieCarousel.module.css';
 
-const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice, moviesCategoryCamelize }) => {
+const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamelize }) => {
 
-    const [movies, setMovies] = useState(null);
     const [onHoverCarousel, setOnHoverCarousel] = useState(false);
 
     const movieCarouselRef = useRef();
@@ -17,25 +15,16 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice, 
     const movieCarouselLastChildRef = useRef();
 
     const dispatch = useDispatch();
+    const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
+    const moviesStatus = useSelector(state => state.movies[moviesCategoryCamelize]?.status);
 
     useEffect(() => {
-
-        const getMovies = async () => {
-            const movies = await getData(moviesCategoryPath);
-            const moviesFiltered = filterNullPosterAndBackdropPath(movies.results);
-            const moviesWithFirstAndLastElementProperty = addFirstAndLastElementProperty(moviesFiltered);
-            setMovies(moviesWithFirstAndLastElementProperty);
-        };
-
-        dispatch(getMoviesAsync({moviesCategoryPath, moviesCategoryCamelize}));
-
-        getMovies();
-
-    }, [moviesCategoryPath]);
+        dispatch(getMoviesAsync({ moviesCategoryPath, moviesCategoryCamelize }));
+    }, []);
 
     return (
         <div className={styles.movieCarousel}>
-            {movies ?
+            {moviesStatus === 'fulfilled' ?
                 <>
                     <p className={styles.movieCarousel__title}>{moviesCategory}</p>
                     <div
@@ -45,7 +34,6 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice, 
                     >
                         <CarouselArrowButton
                             onHoverCarousel={onHoverCarousel}
-                            isNotMobileDevice={isNotMobileDevice}
                             carouselRef={movieCarouselRef}
                             carouselChildRef={movieCarouselFirstChildRef}
                         />
@@ -63,7 +51,6 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, isNotMobileDevice, 
                         <CarouselArrowButton
                             isRightArrow
                             onHoverCarousel={onHoverCarousel}
-                            isNotMobileDevice={isNotMobileDevice}
                             carouselRef={movieCarouselRef}
                             carouselChildRef={movieCarouselLastChildRef}
                         />

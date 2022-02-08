@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
 import Banner from "../../components/Banner/";
 import Header from "../../components/Header/";
 import MovieCarousel from "../../components/MovieCarousel/";
-import { isMobileDevice } from "../../services";
 import { useSelector } from "react-redux";
-import styles from "./Home.module.css";
 import { selectGenres, selectGenresStatus } from "../../redux/slices/genresSlice";
+import styles from "./Home.module.css";
 
 const Home = () => {
     const genders = useSelector(selectGenres);
     const gendersStatus = useSelector(selectGenresStatus);
-
-    const [isNotMobileDevice, setIsNotMobileDevice] = useState();
-
-    useEffect(() => {
-        setIsNotMobileDevice(!isMobileDevice());
-    }, []);
 
     return (
         <div className={styles.home}>
@@ -28,7 +20,6 @@ const Home = () => {
                             moviesCategoryPath={gender.moviesLink}
                             moviesCategory={gender.genderName}
                             moviesCategoryCamelize={gender.genderNameCamelCase}
-                            isNotMobileDevice={isNotMobileDevice}
                         />
                     </div >)
                 )

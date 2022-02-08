@@ -3,6 +3,7 @@ import Home from './pages/Home/';
 import { useDispatch,  } from 'react-redux'
 import { getGenresAsync } from './redux/slices/genresSlice';
 import { useEffect } from 'react';
+import { checkIfItIsAMobileDevice } from './redux/slices/initialStatusSlice';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getGenresAsync());
+    dispatch(checkIfItIsAMobileDevice());
   }, []);
 
   return (
