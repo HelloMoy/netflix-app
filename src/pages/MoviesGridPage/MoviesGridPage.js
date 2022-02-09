@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Loader from '../../components/Loader/';
 import MoviesGrid from '../../components/MoviesGrid/';
 import { selectGenres, selectGenresStatus } from '../../redux/slices/genresSlice';
 import styles from './MoviesGridPage.module.css';
@@ -15,13 +16,13 @@ const MoviesGridPage = () => {
         <div className={styles.moviesGridPage}>
             {gendersStatus === 'fulfilled' ?
                 <>
-                    <p>{gender.genderName}</p>
+                    <p className={styles.moviesGridPage__title}>{gender.genderName}</p>
                     <MoviesGrid
                         moviesCategoryPath={gender.moviesLink}
                         moviesCategoryCamelize={gender.genderNameCamelCase}
                     />
                 </>
-                : 'Loading'
+                : <Loader/>
             }
         </div>
     );

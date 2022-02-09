@@ -20,7 +20,7 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
     const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
 
     useEffect(() => {
-        if(lastPageFetched) return;
+        if (lastPageFetched) return;
         dispatch(getMoviesAsync({ moviesCategoryPath, moviesCategoryCamelize }));
     }, []);
 
@@ -42,13 +42,14 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
                         <ul className={styles.movieCarousel__movies} ref={movieCarouselRef}
                         >
                             {movies.map((movie) => (
-                                <Movie
-                                    movie={movie}
-                                    key={movie.id}
-                                    firstMovieRef={movieCarouselFirstChildRef}
-                                    lastMovieRef={movieCarouselLastChildRef}
-                                    moviesCategoryCamelize={moviesCategoryCamelize}
-                                />
+                                <li className={styles.movie} key={movie.id}>
+                                    <Movie
+                                        movie={movie}
+                                        firstMovieRef={movieCarouselFirstChildRef}
+                                        lastMovieRef={movieCarouselLastChildRef}
+                                        moviesCategoryCamelize={moviesCategoryCamelize}
+                                    />
+                                </li>
                             ))}
                         </ul>
                         <CarouselArrowButton
