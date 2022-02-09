@@ -5,21 +5,23 @@ import { movieImagePath } from '../../paths/links';
 import { getMoviesAsync } from '../../redux/slices/moviesSlice';
 import styles from './MoviesGrid.module.css';
 
-const MoviesGrid = ({ moviesCategory, moviesCategoryPath, moviesCategoryCamelize }) => {
+const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize }) => {
 
-    const [pageNumber, setPageNumber] = useState(1);
     const lastElementRef = useRef();
 
     const dispatch = useDispatch();
     const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
     const moviesStatus = useSelector(state => state.movies.status);
     const lastMovieId = useSelector(state => state.movies[moviesCategoryCamelize]?.lastMovieId);
+    const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
+    const totalPages = useSelector(state => state.movies[moviesCategoryCamelize]?.totalPages);
+
 
     const useElementOnScreenOptions = {
         threshold: .1
     };
 
-    const lastElement = useElementOnScreen(useElementOnScreenOptions, lastElementRef);
+    const lastElementIsVisible = useElementOnScreen(useElementOnScreenOptions, lastElementRef);
 
     const linkAndGenre = {
         moviesCategoryPath,
@@ -27,30 +29,26 @@ const MoviesGrid = ({ moviesCategory, moviesCategoryPath, moviesCategoryCamelize
     }
 
     useEffect(() => {
-        if (moviesStatus !== 'fulfilled') {
-            console.log('first fetching');
-            dispatch(getMoviesAsync(linkAndGenre));
-        }
-    }, []);
+        if (lastPageFetched) return;
+        dispatch(getMoviesAsync(linkAndGenre));
+        console.log('first fetching');
+    }, [moviesCategoryCamelize]);
 
     useEffect(() => {
-        if (lastElement) {
-            console.log('fetching');
-            const prevPageNumber = pageNumber;
-            setPageNumber(prevPageNumber + 1);
-            linkAndGenre.moviesCategoryPath = `${moviesCategoryPath}&page=${prevPageNumber + 1}`;
+        if (lastElementIsVisible && lastPageFetched < totalPages) {
+            console.log('fetching page: ' + ((lastPageFetched) + 1));
+            linkAndGenre.moviesCategoryPath = `${moviesCategoryPath}&page=${Number(lastPageFetched) + 1}`;
             dispatch(getMoviesAsync(linkAndGenre));
         }
-    }, [lastElement]);
+    }, [lastElementIsVisible]);
 
     return (
         <div className={styles.moviesGrid}>
-            <div>{moviesCategory}</div>
             {
                 movies &&
                 movies.map(movie => (
                     <div key={movie.id} ref={lastMovieId === movie.id ? lastElementRef : null}>
-                        <img className={styles.moviesGrid__image} alt={movie.title} src={`${movieImagePath}${movie.backdrop_path}`} />
+                        <img className={styles.moviesGrid__image} alt={movie.title} src={`${movieImagePath}${movie.poster_path}`} />
                     </div>))
             }
             {moviesStatus === 'loading' ? 'loading' : null}

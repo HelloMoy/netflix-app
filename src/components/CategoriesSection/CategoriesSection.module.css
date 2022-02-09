@@ -24,6 +24,9 @@
 
 .category__textItem{
     padding: 10px 20px 10px 20px;
+    display: block;
+    color: white;
+    text-decoration: none;
 }
 
 .category__textItem:hover{

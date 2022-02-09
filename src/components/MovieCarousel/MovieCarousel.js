@@ -17,8 +17,10 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
     const dispatch = useDispatch();
     const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
     const moviesStatus = useSelector(state => state.movies[moviesCategoryCamelize]?.status);
+    const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
 
     useEffect(() => {
+        if(lastPageFetched) return;
         dispatch(getMoviesAsync({ moviesCategoryPath, moviesCategoryCamelize }));
     }, []);
 
@@ -45,6 +47,7 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
                                     key={movie.id}
                                     firstMovieRef={movieCarouselFirstChildRef}
                                     lastMovieRef={movieCarouselLastChildRef}
+                                    moviesCategoryCamelize={moviesCategoryCamelize}
                                 />
                             ))}
                         </ul>

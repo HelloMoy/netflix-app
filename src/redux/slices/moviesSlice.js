@@ -28,15 +28,19 @@ export const moviesSlice = createSlice({
                 const moviesFiltered = filterNullPosterAndBackdropPath(action.payload.results);
                 const [firstMovieId, lastMovieId] = getFirstAndLastElementId(moviesFiltered);
 
+                const previousFirstMovieId = state[action.payload.genre]?.firstMovieId;
+
                 const movieData = {
-                    movies: concatElementsInArray(state[`${action.payload.genre}`]?.movies, moviesFiltered),
+                    movies: concatElementsInArray(state[action.payload.genre]?.movies, moviesFiltered),
                     status: 'fulfilled',
-                    firstMovieId,
+                    lastPageFetched: action.payload.page,
+                    totalPages: action.payload.total_pages,
+                    firstMovieId : (previousFirstMovieId ? previousFirstMovieId : firstMovieId),
                     lastMovieId,
                 }
 
                 state.status = 'fulfilled';
-                state[`${action.payload.genre}`] = { ...state[`${action.payload.genre}`], ...movieData };
+                state[action.payload.genre] = { ...state[action.payload.genre], ...movieData };
             })
             .addCase(getMoviesAsync.rejected, (state) => {
                 state.status = 'rejected';

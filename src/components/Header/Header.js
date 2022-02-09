@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Lens from '../../assets/icons/svgComponents/Lens';
 import MenuBar from '../../assets/icons/svgComponents/MenuBar';
 import CategoriesSection from '../CategoriesSection/';
@@ -23,13 +24,15 @@ const Header = () => {
                         <MenuBar className={styles.header__menuBarIcon} />
                     </div>
                 </div>
-                <div className={styles.header__netflixIconContainer}>
-                    <img
-                        className={styles.header__netflixIcon}
-                        src={'https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg'}
-                        alt="Netflix Icon"
-                    />
-                </div>
+                <Link to="/">
+                    <div className={styles.header__netflixIconContainer}>
+                        <img
+                            className={styles.header__netflixIcon}
+                            src={'https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg'}
+                            alt="Netflix Icon"
+                        />
+                    </div>
+                </Link>
             </div>
             <div className={styles.header__rightSection}>
                 <div className={styles.header__lensIconContainer}>

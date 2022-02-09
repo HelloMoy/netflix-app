@@ -1,9 +1,12 @@
-import './App.css';
+import Header from './components/Header/';
 import Home from './pages/Home/';
-import { useDispatch,  } from 'react-redux'
+import MoviesGridPage from './pages/MoviesGridPage/';
+import { useDispatch, } from 'react-redux'
 import { getGenresAsync } from './redux/slices/genresSlice';
 import { useEffect } from 'react';
 import { checkIfItIsAMobileDevice } from './redux/slices/initialStatusSlice';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
 
 function App() {
 
@@ -16,7 +19,11 @@ function App() {
 
   return (
     <div className="App">
-      <Home />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="gender/:genderId" element={<MoviesGridPage/>} />
+      </Routes>
     </div>
   );
 }
