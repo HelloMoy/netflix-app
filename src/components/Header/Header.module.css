@@ -68,6 +68,7 @@
 
 .search__extend {
     width: 250px;
+    border: #555555 solid 2px;
 }
 
 .searchIcon {
@@ -85,7 +86,7 @@
 }
 
 .searchIcon__container {
-    width: calc(var(--search-height) / 2);
+    width: calc(var(--search-height) / 1.5);
     padding-right: 5px;
 }
 

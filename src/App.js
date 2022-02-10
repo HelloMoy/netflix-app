@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { checkIfItIsAMobileDevice } from './redux/slices/initialStatusSlice';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import MoviesGridSearch from './components/MoviesGridSearch/';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="gender/:genderId" element={<MoviesGridPage/>} />
+        <Route path="search/:title" element={<MoviesGridSearch/>} />
       </Routes>
     </div>
   );

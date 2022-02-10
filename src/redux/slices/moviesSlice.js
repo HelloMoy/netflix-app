@@ -6,7 +6,7 @@ export const getMoviesAsync = createAsyncThunk(
     'movies/fetchMovies',
     async (movieData) => {
         const movies = await getData(movieData.moviesCategoryPath);
-        const moviesWithGenre = { ...movies, genre: movieData.moviesCategoryCamelize };
+        const moviesWithGenre = { ...movies, genre: movieData.moviesCategoryCamelize, isByGender: movieData.isByGender };
         return moviesWithGenre;
     }
 );
@@ -26,16 +26,17 @@ export const moviesSlice = createSlice({
             .addCase(getMoviesAsync.fulfilled, (state, action) => {
 
                 const moviesFiltered = filterNullPosterAndBackdropPath(action.payload.results);
+
                 const [firstMovieId, lastMovieId] = getFirstAndLastElementId(moviesFiltered);
 
                 const previousFirstMovieId = state[action.payload.genre]?.firstMovieId;
 
                 const movieData = {
-                    movies: concatElementsInArray(state[action.payload.genre]?.movies, moviesFiltered),
+                    movies: (action.payload.isByGender ? concatElementsInArray(state[action.payload.genre]?.movies, moviesFiltered) : moviesFiltered),
                     status: 'fulfilled',
                     lastPageFetched: action.payload.page,
                     totalPages: action.payload.total_pages,
-                    firstMovieId : (previousFirstMovieId ? previousFirstMovieId : firstMovieId),
+                    firstMovieId: (previousFirstMovieId ? previousFirstMovieId : firstMovieId),
                     lastMovieId,
                 }
 

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Lens from '../../assets/icons/svgComponents/Lens';
 import MenuBar from '../../assets/icons/svgComponents/MenuBar';
 import CategoriesSection from '../CategoriesSection/';
@@ -11,13 +11,15 @@ const Header = () => {
 
     const [showCategoriesSection, setShowCategoriesSection] = useState(false);
 
+    let navigate = useNavigate();
+
     const toggleShowCategoriesSection = () => {
         setShowCategoriesSection((previousState) => !previousState);
     }
 
     const onClearSearchInput = () => {
         searchInputRef.current.value = '';
-        searchInputRef.current.focus();
+        setShowSearchInput(!showSearchInput);
     }
 
     const onLensIconClick = () => {
@@ -28,6 +30,7 @@ const Header = () => {
     const handleOnSubmitSearchInput = (event) => {
         event.preventDefault();
         console.log(searchInputRef.current.value);
+        navigate(`search/:${searchInputRef.current.value}`);
         searchInputRef.current.value = '';
         onLensIconClick();
     }

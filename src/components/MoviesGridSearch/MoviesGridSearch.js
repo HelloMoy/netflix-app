@@ -1,19 +1,23 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import useElementOnScreen from '../../customHooks/useElementOnScreen';
 import { getMoviesAsync } from '../../redux/slices/moviesSlice';
 import Movie from '../Movie';
-import styles from './MoviesGrid.module.css';
+import styles from './MoviesGridSearch.module.css';
 
-const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = false }) => {
+const MoviesGridSearch = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = false }) => {
+
+    const titleToSearchFromParameters = useParams().title;
+    // const titleToSearchFromParameters = 'spider';
 
     const lastElementRef = useRef();
 
     const dispatch = useDispatch();
-    const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
+    const movies = useSelector(state => state.movies.searchByName?.movies);
     const moviesStatus = useSelector(state => state.movies.status);
-    const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
-    const totalPages = useSelector(state => state.movies[moviesCategoryCamelize]?.totalPages);
+    const lastPageFetched = useSelector(state => state.movies.searchByName?.lastPageFetched);
+    const totalPages = useSelector(state => state.movies.searchByName?.totalPages);
 
     const useElementOnScreenOptions = {
         threshold: .01
@@ -21,22 +25,26 @@ const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = f
 
     const lastElementIsVisible = useElementOnScreen(useElementOnScreenOptions, lastElementRef);
 
+    const link = `https://api.themoviedb.org/3/search/movie?api_key=df9ac6d353bf12ec1a980d483f2ac60d&query=${titleToSearchFromParameters}`;
+
     const linkAndGenre = {
-        moviesCategoryPath,
-        moviesCategoryCamelize, 
+        moviesCategoryPath: link,
+        moviesCategoryCamelize:'searchByName',
         isByGender
     }
 
+
     useEffect(() => {
-        if (lastPageFetched) return;
+        if (lastPageFetched && isByGender) return;
         dispatch(getMoviesAsync(linkAndGenre));
+        // dispatch(getMoviesAsync(linkAndGenre));
         console.log('first fetching');
-    }, [moviesCategoryCamelize]);
+    }, [titleToSearchFromParameters]);
 
     useEffect(() => {
         if (lastElementIsVisible && lastPageFetched < totalPages) {
             console.log('fetching page: ' + ((lastPageFetched) + 1));
-            linkAndGenre.moviesCategoryPath = `${moviesCategoryPath}&page=${Number(lastPageFetched) + 1}`;
+            linkAndGenre.moviesCategoryPath = `${link}&page=${Number(lastPageFetched) + 1}`;
             dispatch(getMoviesAsync(linkAndGenre));
         }
     }, [lastElementIsVisible]);
@@ -51,7 +59,7 @@ const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = f
                             <Movie
                                 movie={movie}
                                 lastMovieRef={lastElementRef}
-                                moviesCategoryCamelize={moviesCategoryCamelize}
+                                moviesCategoryCamelize={linkAndGenre.moviesCategoryCamelize}
                                 isMovieGrid
                             />
                         </div>
@@ -63,4 +71,4 @@ const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = f
     );
 };
 
-export default MoviesGrid;
+export default MoviesGridSearch;

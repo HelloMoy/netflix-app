@@ -20,9 +20,10 @@ const MoviesGridPage = () => {
                     <MoviesGrid
                         moviesCategoryPath={gender.moviesLink}
                         moviesCategoryCamelize={gender.genderNameCamelCase}
+                        isByGender
                     />
                 </>
-                : <Loader/>
+                : <Loader />
             }
         </div>
     );
