@@ -6,8 +6,8 @@ export const getMoviesAsync = createAsyncThunk(
     'movies/fetchMovies',
     async (movieData) => {
         const movies = await getData(movieData.moviesPath);
-        const moviesWithGenre = { ...movies, genre: movieData.moviesTopicToSearch, isByGender: movieData.isByGender };
-        return moviesWithGenre;
+        const moviesWithTopic = { ...movies, topic: movieData.moviesTopicToSearch };
+        return moviesWithTopic;
     }
 );
 
@@ -29,10 +29,10 @@ export const moviesSlice = createSlice({
 
                 const [firstMovieId, lastMovieId] = getFirstAndLastElementId(moviesFiltered);
 
-                const previousFirstMovieId = state[action.payload.genre]?.firstMovieId;
+                const previousFirstMovieId = state[action.payload.topic]?.firstMovieId;
 
                 const movieData = {
-                    movies: (action.payload.isByGender ? concatElementsInArray(state[action.payload.genre]?.movies, moviesFiltered) : moviesFiltered),
+                    movies: (concatElementsInArray(state[action.payload.topic]?.movies, moviesFiltered)),
                     status: 'fulfilled',
                     lastPageFetched: action.payload.page,
                     totalPages: action.payload.total_pages,
@@ -41,7 +41,7 @@ export const moviesSlice = createSlice({
                 }
 
                 state.status = 'fulfilled';
-                state[action.payload.genre] = { ...state[action.payload.genre], ...movieData };
+                state[action.payload.topic] = { ...state[action.payload.topic], ...movieData };
             })
             .addCase(getMoviesAsync.rejected, (state) => {
                 state.status = 'rejected';

@@ -5,7 +5,7 @@ import { getMoviesAsync } from '../../redux/slices/moviesSlice';
 import Movie from '../Movie';
 import styles from './MoviesGrid.module.css';
 
-const MoviesGrid = ({ moviesPath, moviesTopicToSearch, isByGender = false }) => {
+const MoviesGrid = ({ moviesPath, moviesTopicToSearch }) => {
 
     const lastElementRef = useRef();
 
@@ -23,12 +23,11 @@ const MoviesGrid = ({ moviesPath, moviesTopicToSearch, isByGender = false }) => 
 
     const linkAndGenre = {
         moviesPath,
-        moviesTopicToSearch, 
-        isByGender
+        moviesTopicToSearch
     }
 
     useEffect(() => {
-        if (lastPageFetched && isByGender) return;
+        if (lastPageFetched) return;
         dispatch(getMoviesAsync(linkAndGenre));
         console.log('first fetching');
     }, [moviesTopicToSearch]);

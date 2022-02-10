@@ -20,7 +20,6 @@ const ByGender = () => {
                     <MoviesGrid
                         moviesPath={gender.moviesLink}
                         moviesTopicToSearch={gender.genderNameCamelCase}
-                        isByGender
                     />
                 </>
                 : <Loader />
