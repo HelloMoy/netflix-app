@@ -28,3 +28,8 @@ export const genresLink = 'https://api.themoviedb.org/3/genre/movie/list?api_key
 export const getRouteByGenre = (idGenre) => (
     `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${idGenre}&language=en-US&sort_by=popularity.desc&include_adult=false`
 );
+
+export const getRouteByTitle = (title) => (
+    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${title}`
+);
+

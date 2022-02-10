@@ -1,17 +1,17 @@
 @import '../../globalVariables.css';
 
-.moviesGridPage{
+.byGender{
     width: 100%;
     height: var(--full-view-height);
 }
 
-.moviesGridPage__title {
+.byGender__title {
     font-size: 25px;
     padding-left: 15px;
 }
 
 @media screen and (max-width: 500px) {
-    .moviesGridPage__title {
+    .byGender__title {
         padding-left: 10px;
     }
 }

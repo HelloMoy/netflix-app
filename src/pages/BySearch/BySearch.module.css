@@ -1,0 +1,17 @@
+@import '../../globalVariables.css';
+
+.bySearch{
+    width: 100%;
+    height: var(--full-view-height);
+}
+
+.bySearch__title {
+    font-size: 25px;
+    padding-left: 15px;
+}
+
+@media screen and (max-width: 500px) {
+    .bySearch__title {
+        padding-left: 10px;
+    }
+}

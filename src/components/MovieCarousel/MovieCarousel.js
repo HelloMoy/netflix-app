@@ -6,7 +6,7 @@ import Movie from "../Movie/";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './MovieCarousel.module.css';
 
-const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamelize }) => {
+const MovieCarousel = ({ moviesPath, moviesCategory, moviesTopicToSearch }) => {
 
     const [onHoverCarousel, setOnHoverCarousel] = useState(false);
 
@@ -15,13 +15,13 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
     const movieCarouselLastChildRef = useRef();
 
     const dispatch = useDispatch();
-    const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
-    const moviesStatus = useSelector(state => state.movies[moviesCategoryCamelize]?.status);
-    const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
+    const movies = useSelector(state => state.movies[moviesTopicToSearch]?.movies);
+    const moviesStatus = useSelector(state => state.movies[moviesTopicToSearch]?.status);
+    const lastPageFetched = useSelector(state => state.movies[moviesTopicToSearch]?.lastPageFetched);
 
     useEffect(() => {
         if (lastPageFetched) return;
-        dispatch(getMoviesAsync({ moviesCategoryPath, moviesCategoryCamelize }));
+        dispatch(getMoviesAsync({ moviesPath, moviesTopicToSearch }));
     }, []);
 
     return (
@@ -47,7 +47,7 @@ const MovieCarousel = ({ moviesCategoryPath, moviesCategory, moviesCategoryCamel
                                         movie={movie}
                                         firstMovieRef={movieCarouselFirstChildRef}
                                         lastMovieRef={movieCarouselLastChildRef}
-                                        moviesCategoryCamelize={moviesCategoryCamelize}
+                                        moviesTopicToSearch={moviesTopicToSearch}
                                     />
                                 </li>
                             ))}

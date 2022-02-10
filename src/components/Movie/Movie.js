@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import { movieImagePath } from "../../paths/links";
 import styles from './Movie.module.css'
 
-const Movie = ({ movie, firstMovieRef, lastMovieRef, moviesCategoryCamelize, isMovieGrid = false }) => {
+const Movie = ({ movie, firstMovieRef, lastMovieRef, moviesTopicToSearch, isMovieGrid = false }) => {
 
-    const firstMovieId = useSelector(state => state.movies[moviesCategoryCamelize]?.firstMovieId);
-    const lastMovieId = useSelector(state => state.movies[moviesCategoryCamelize]?.lastMovieId);
+    const firstMovieId = useSelector(state => state.movies[moviesTopicToSearch]?.firstMovieId);
+    const lastMovieId = useSelector(state => state.movies[moviesTopicToSearch]?.lastMovieId);
 
     const assignReference = () => {
         if (movie.id === firstMovieId && !isMovieGrid) return firstMovieRef;

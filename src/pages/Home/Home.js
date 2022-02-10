@@ -15,9 +15,9 @@ const Home = () => {
                 genders.map((gender) => (
                     <div className={styles.movieCarousels} key={gender.id}>
                         <MovieCarousel
-                            moviesCategoryPath={gender.moviesLink}
+                            moviesPath={gender.moviesLink}
                             moviesCategory={gender.genderName}
-                            moviesCategoryCamelize={gender.genderNameCamelCase}
+                            moviesTopicToSearch={gender.genderNameCamelCase}
                         />
                     </div >)
                 )

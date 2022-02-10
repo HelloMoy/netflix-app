@@ -5,15 +5,15 @@ import { getMoviesAsync } from '../../redux/slices/moviesSlice';
 import Movie from '../Movie';
 import styles from './MoviesGrid.module.css';
 
-const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = false }) => {
+const MoviesGrid = ({ moviesPath, moviesTopicToSearch, isByGender = false }) => {
 
     const lastElementRef = useRef();
 
     const dispatch = useDispatch();
-    const movies = useSelector(state => state.movies[moviesCategoryCamelize]?.movies);
+    const movies = useSelector(state => state.movies[moviesTopicToSearch]?.movies);
     const moviesStatus = useSelector(state => state.movies.status);
-    const lastPageFetched = useSelector(state => state.movies[moviesCategoryCamelize]?.lastPageFetched);
-    const totalPages = useSelector(state => state.movies[moviesCategoryCamelize]?.totalPages);
+    const lastPageFetched = useSelector(state => state.movies[moviesTopicToSearch]?.lastPageFetched);
+    const totalPages = useSelector(state => state.movies[moviesTopicToSearch]?.totalPages);
 
     const useElementOnScreenOptions = {
         threshold: .01
@@ -22,21 +22,21 @@ const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = f
     const lastElementIsVisible = useElementOnScreen(useElementOnScreenOptions, lastElementRef);
 
     const linkAndGenre = {
-        moviesCategoryPath,
-        moviesCategoryCamelize, 
+        moviesPath,
+        moviesTopicToSearch, 
         isByGender
     }
 
     useEffect(() => {
-        if (lastPageFetched) return;
+        if (lastPageFetched && isByGender) return;
         dispatch(getMoviesAsync(linkAndGenre));
         console.log('first fetching');
-    }, [moviesCategoryCamelize]);
+    }, [moviesTopicToSearch]);
 
     useEffect(() => {
         if (lastElementIsVisible && lastPageFetched < totalPages) {
             console.log('fetching page: ' + ((lastPageFetched) + 1));
-            linkAndGenre.moviesCategoryPath = `${moviesCategoryPath}&page=${Number(lastPageFetched) + 1}`;
+            linkAndGenre.moviesPath = `${moviesPath}&page=${Number(lastPageFetched) + 1}`;
             dispatch(getMoviesAsync(linkAndGenre));
         }
     }, [lastElementIsVisible]);
@@ -51,7 +51,7 @@ const MoviesGrid = ({ moviesCategoryPath, moviesCategoryCamelize, isByGender = f
                             <Movie
                                 movie={movie}
                                 lastMovieRef={lastElementRef}
-                                moviesCategoryCamelize={moviesCategoryCamelize}
+                                moviesTopicToSearch={moviesTopicToSearch}
                                 isMovieGrid
                             />
                         </div>

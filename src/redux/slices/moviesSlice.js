@@ -5,8 +5,8 @@ import { getData } from '../../services';
 export const getMoviesAsync = createAsyncThunk(
     'movies/fetchMovies',
     async (movieData) => {
-        const movies = await getData(movieData.moviesCategoryPath);
-        const moviesWithGenre = { ...movies, genre: movieData.moviesCategoryCamelize, isByGender: movieData.isByGender };
+        const movies = await getData(movieData.moviesPath);
+        const moviesWithGenre = { ...movies, genre: movieData.moviesTopicToSearch, isByGender: movieData.isByGender };
         return moviesWithGenre;
     }
 );

@@ -29,8 +29,7 @@ const Header = () => {
 
     const handleOnSubmitSearchInput = (event) => {
         event.preventDefault();
-        console.log(searchInputRef.current.value);
-        navigate(`search/:${searchInputRef.current.value}`);
+        navigate(`search/${searchInputRef.current.value}`);
         searchInputRef.current.value = '';
         onLensIconClick();
     }
