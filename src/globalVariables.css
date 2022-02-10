@@ -2,5 +2,6 @@
     --header-height: 60px;
     --grid-gap: 15px;
     --grid-gap-500px: 10px;
-    --full-view-height: calc(100vh - var(--header-height))
+    --full-view-height: calc(100vh - var(--header-height));
+    
 }
