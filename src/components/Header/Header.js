@@ -18,8 +18,9 @@ const Header = () => {
     }
 
     const onClearSearchInput = () => {
+        setShowSearchInput(true);
         searchInputRef.current.value = '';
-        setShowSearchInput(!showSearchInput);
+        searchInputRef.current.focus();
     }
 
     const onLensIconClick = () => {
@@ -33,6 +34,7 @@ const Header = () => {
         searchInputRef.current.value = '';
         onLensIconClick();
     }
+
 
     return (
         <div className={styles.header}>
@@ -64,7 +66,7 @@ const Header = () => {
                     </div>
                     <div className={styles.search__formContainer}>
                         <form action="submit" className={styles.search__form} onSubmit={handleOnSubmitSearchInput}>
-                            <input type="text" ref={searchInputRef} className={styles.search__input} />
+                            <input type="text" ref={searchInputRef} className={styles.search__input} onBlur={() => setShowSearchInput(false)} />
                         </form>
                     </div>
                     <div className={styles.search__clearInput} onClick={onClearSearchInput}>

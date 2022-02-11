@@ -25,7 +25,14 @@ const CategoriesSection = ({ showCategoriesSection, toggleShowCategoriesSection 
                     genders.map((gender) => (
                         <div className={styles.category__item} key={gender.id}>
                             <NavLink
-                                className={styles.category__textItem}
+                                className={({ isActive }) =>
+                                    isActive
+                                        ?
+                                        `${styles.category__textItem} ${styles.category__textItem__isActive}`
+                                        :
+                                        styles.category__textItem
+                                }
+                                // className={styles.category__textItem}
                                 to={`/gender/${gender.genderNameCamelCase}`}
                                 onClick={toggleShowCategoriesSection}
                             >
