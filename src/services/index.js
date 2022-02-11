@@ -32,6 +32,13 @@ export const isMobileDevice = () => {
     }
 };
 
+export const resetScroll = () => {
+    window.scroll({
+        top: 0,
+        left: 0
+    });
+}
+
 
 export const filterNullPosterAndBackdropPath = (movies) => {
     const filteredMovies = movies.filter((movie) => (movie.poster_path && movie.backdrop_path));
@@ -45,9 +52,9 @@ export const getFirstAndLastElementId = (movies) => {
 }
 
 export const concatElementsInArray = (previousItem, currentItem) => {
-    if(previousItem){
+    if (previousItem) {
         return [...previousItem, ...currentItem]
-    }else return [...currentItem]
+    } else return [...currentItem]
 }
 
 export const stringCamelize = (stringToCamelize) => {

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Lens from '../../assets/icons/svgComponents/Lens';
 import MenuBar from '../../assets/icons/svgComponents/MenuBar';
+import { resetScroll } from '../../services';
 import CategoriesSection from '../CategoriesSection/';
 import styles from './Header.module.css';
 
@@ -29,6 +30,7 @@ const Header = () => {
     }
 
     const handleOnSubmitSearchInput = (event) => {
+        resetScroll();
         event.preventDefault();
         navigate(`search/${searchInputRef.current.value}`);
         searchInputRef.current.value = '';
