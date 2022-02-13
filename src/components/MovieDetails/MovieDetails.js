@@ -1,74 +1,112 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getMovieDetailsPath, movieImagePath } from "../../paths/links";
+import { getMovieDetailsAsync, selectMovieDetails } from "../../redux/slices/moviesSlice";
 import styles from './MovieDetails.module.css';
 
 const MovieDetails = () => {
+
+    const movieIdFromParameters = useParams().movieId;
+    const movie = useSelector(selectMovieDetails);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const movieDetailsPath = getMovieDetailsPath(movieIdFromParameters);
+        dispatch(getMovieDetailsAsync(movieDetailsPath));
+    }, [])
+
+    console.log(movie);
     return (
         <div className={styles.movieDetails}>
-            <div className={styles.banner}>
-                <div className={styles.banner__imageContainer}>
-                    <img
-                        className={styles.banner__image}
-                        src="https://image.tmdb.org/t/p/original/3G1Q5xF40HkUBJXxt2DQgQzKTp5.jpg"
-                        alt="Encanto"
-                    />
-                    <div className={styles.banner__boxShadow}></div>
-                </div>
-                <div className={styles.banner__textContainer}>
-                    <div className={styles.banner__text}>
-                        <h2 className={styles.banner__title}>Spiderman: No way Home</h2>
-                        {/* <h2 className={styles.banner__title}>Encanto</h2> */}
-                        <p className={styles.banner__overview}>
-                            The tale of an extraordinary family, the Madrigals, who live hidden in the mountains of Colombia, in a magical house, in a vibrant town, in a wondrous, charmed place called an Encanto. The magic of the Encanto has blessed every child in the family with a unique gift from super strength to the power to heal—every child except one, Mirabel. But when she discovers that the magic surrounding the Encanto is in danger, Mirabel decides that she, the only ordinary Madrigal, might just be her exceptional family's last hope.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {
+                movie.status === 'fulfilled' ?
 
-            <div className={styles.detailsSection}>
-                <div className={styles.detailsSection__grid}>
-                    <div className={styles.detailsSection__imageContainer}>
-                        <img className={styles.detailsSection__image} src="https://image.tmdb.org/t/p/w300/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg" alt="Encanto" />
-                    </div>
-                    <div className={styles.detailsSection__data}>
-                        <div className={styles.detailsSection__dataContainer}>
-                            <div className={`${styles.detailsSection__item__rankingContainer} ${styles.detailsSection__item}`}>
-                                <p className={`${styles.detailsSection__item__title}`}>
-                                    Ranking
-                                </p>
-                                <p className={`${styles.detailsSection__item__description}`}>
-                                    &#9734;&#9734;&#9734;&#9734;&#9734;
-                                </p>
+                    <>
+                        <div className={styles.banner}>
+                            <div className={styles.banner__imageContainer}>
+                                <img
+                                    className={styles.banner__image}
+                                    src={movieImagePath('original', movie.details.backdrop_path)}
+                                    alt={movie.details.title}
+                                />
+                                <div className={styles.banner__boxShadow}></div>
                             </div>
-                            <div className={`${styles.detailsSection__item__durationContainer} ${styles.detailsSection__item}`}>
-                                <p className={`${styles.detailsSection__item__title}`}>
-                                    Duration
-                                </p>
-                                <p className={`${styles.detailsSection__item__description}`}>
-                                    1:20
-                                </p>
-                            </div>
-                            <div className={`${styles.detailsSection__item__genreContainer} ${styles.detailsSection__item}`}>
-                                <p className={`${styles.detailsSection__item__title}`}>
-                                    Genre
-                                </p>
-                                <p className={`${styles.detailsSection__item__description}`}>
-                                    Action
-                                </p>
-                            </div>
-                            <div className={`${styles.detailsSection__item__releaseDateContainer} ${styles.detailsSection__item}`}>
-                                <p className={`${styles.detailsSection__item__title}`}>
-                                    ReleaseDate
-                                </p>
-                                <p className={`${styles.detailsSection__item__description}`}>
-                                    2021-12-15
-                                </p>
+                            <div className={styles.banner__textContainer}>
+                                <div className={styles.banner__text}>
+                                    <h2 className={styles.banner__title}>{movie.details.title}</h2>
+                                    <p className={styles.banner__overview}>
+                                        {movie.details.overview}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={`${styles.castCarousel}`}>
-                        Cast Carousel
-                    </div>
-                </div>
-            </div>
+
+                        <div className={styles.detailsSection}>
+                            <div className={styles.detailsSection__grid}>
+                                <div className={styles.detailsSection__imageContainer}>
+                                    <img
+                                        className={styles.detailsSection__image}
+                                        src={movieImagePath('w300', movie.details.poster_path)}
+                                        alt={movie.details.title}
+                                    />
+                                </div>
+                                <div className={styles.detailsSection__data}>
+                                    <div className={styles.detailsSection__dataContainer}>
+                                        <div className={`${styles.detailsSection__item__rankingContainer} ${styles.detailsSection__item}`}>
+                                            <p className={`${styles.detailsSection__item__title}`}>
+                                                Ranking
+                                            </p>
+                                            <p className={`${styles.detailsSection__item__description}`}>
+                                                {movie.details.vote_average}
+                                            </p>
+                                        </div>
+                                        <div className={`${styles.detailsSection__item__durationContainer} ${styles.detailsSection__item}`}>
+                                            <p className={`${styles.detailsSection__item__title}`}>
+                                                Duration
+                                            </p>
+                                            <p className={`${styles.detailsSection__item__description}`}>
+                                                {`${movie.details.runtime} min`}
+                                            </p>
+                                        </div>
+                                        <div className={`${styles.detailsSection__item__genreContainer} ${styles.detailsSection__item}`}>
+                                            <p className={`${styles.detailsSection__item__title}`}>
+                                                Genre
+                                            </p>
+                                            <p className={`${styles.detailsSection__item__description}`}>
+                                                {movie.details.genres[0].name}
+                                            </p>
+                                        </div>
+                                        <div className={`${styles.detailsSection__item__releaseDateContainer} ${styles.detailsSection__item}`}>
+                                            <p className={`${styles.detailsSection__item__title}`}>
+                                                Release Date
+                                            </p>
+                                            <p className={`${styles.detailsSection__item__description}`}>
+                                                {movie.details.release_date}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={`${styles.castCarousel}`}>
+                                    <p className={`${styles.detailsSection__item__title}`}>
+                                        Cast Carousel
+                                    </p>
+                                </div>
+                                <div className={styles.detailsSection__overviewContainer} >
+                                    <p className={`${styles.detailsSection__overviewTitle} ${styles.detailsSection__item__title}`}>
+                                        Overview
+                                    </p>
+                                    <p className={styles.detailsSection__overview}>
+                                        {movie.details.overview}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+
+                    : 'Loadion'
+            }
         </div >
     );
 };

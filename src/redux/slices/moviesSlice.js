@@ -11,10 +11,19 @@ export const getMoviesAsync = createAsyncThunk(
     }
 );
 
+export const getMovieDetailsAsync = createAsyncThunk(
+    'movies/fetchMovieDetails',
+    async (movieDetailsPath) => {
+        const movieDetails = await getData(movieDetailsPath);
+        return movieDetails;
+    }
+);
+
 export const moviesSlice = createSlice({
     name: 'movies',
     initialState: {
         status: 'idle',
+        movie: {},
     },
     reducers: {
     },
@@ -45,10 +54,27 @@ export const moviesSlice = createSlice({
             })
             .addCase(getMoviesAsync.rejected, (state) => {
                 state.status = 'rejected';
+            })
+            .addCase(getMovieDetailsAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getMovieDetailsAsync.fulfilled, (state, action) => {
+
+                const movieData = {
+                    details: action.payload,
+                    status: 'fulfilled',
+                }
+
+                state.status = 'fulfilled';
+                state.movie = movieData;
+            })
+            .addCase(getMovieDetailsAsync.rejected, (state) => {
+                state.status = 'rejected';
             });
     },
 });
 
 export const selectMovies = (state) => state.movies.value;
+export const selectMovieDetails = (state) => state.movies.movie;
 
 export default moviesSlice.reducer;

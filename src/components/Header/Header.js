@@ -49,7 +49,7 @@ const Header = () => {
                         <MenuBar className={styles.header__menuBarIcon} />
                     </div>
                 </div>
-                <Link to="/">
+                <Link to="/" onClick={() => resetScroll()}>
                     <div className={styles.header__netflixIconContainer}>
                         <img
                             className={styles.header__netflixIcon}
