@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { checkIfItIsAMobileDevice } from './redux/slices/initialStatusSlice';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import MovieDetails from './components/MovieDetails/';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/movie" element={<MovieDetails/>} />
         <Route path="gender/:genderId" element={<ByGender />} />
         <Route path="search/:title" element={<BySearch />} />
       </Routes>

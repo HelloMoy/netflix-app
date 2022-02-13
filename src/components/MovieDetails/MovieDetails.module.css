@@ -1,0 +1,208 @@
+@import '../../globalVariables.css';
+
+.movieDetails {
+    --banner-image-left-padding: 20%;
+    --details-image-width: 300px;
+    --details-image-left-padding: 20px;
+    --detailsSection-padding-top: 30px;
+    --detailsSection-item-font-size: 20px;
+}
+
+.movieDetails {
+    padding: 0 10% 0 10%;
+}
+
+.banner {
+    /* height: calc(var(--full-view-height) - var(--header-height)); */
+    position: relative;
+}
+
+.banner__imageContainer {
+    width: 100%;
+    height: 100%;
+    padding-left: var(--banner-image-left-padding);
+    position: relative;
+    overflow: hidden;
+}
+
+.banner__image {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover;
+}
+
+.banner__boxShadow {
+    width: calc(100% - var(--banner-image-left-padding));
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-shadow: inset -40px -40px 100px #000000, inset 40px 40px 100px #000000;
+}
+
+.banner__textContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.banner__text {
+    width: 40%;
+    height: 100%;
+    /* padding-left: 50px; */
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner__title {
+    text-align: center;
+    padding-bottom: 30px;
+    font-size: 60px;
+    user-select: none;
+}
+
+.banner__overview {
+    font-size: 20px;
+    font-weight: bold;
+    user-select: none;
+    /* max-height: 217px; */
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.banner__overview::-webkit-scrollbar {
+    display: none;
+}
+
+.detailsSection {
+    width: 100%;
+    padding: var(--detailsSection-padding-top) var(--details-image-left-padding) 0 var(--details-image-left-padding);
+}
+
+.detailsSection__grid {
+    display: grid;
+    grid-template-columns: var(--details-image-width) auto;
+    grid-template-areas:
+        "image data"
+        "image cast";
+}
+
+.detailsSection__imageContainer {
+    grid-area: image;
+    width: var(--details-image-width);
+}
+
+.detailsSection__image {
+    border-radius: 10px;
+    width: 100%;
+}
+
+.detailsSection__data {
+    width: 100%;
+    width: 100%;
+    grid-area: data;
+    display: flex;
+    align-items: center;
+}
+
+.detailsSection__dataContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.castCarousel {
+    grid-area: cast;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailsSection__item__title {
+    font-size: var(--detailsSection-item-font-size);
+    color: #a3a3a3;
+    
+}
+
+.detailsSection__item__description {
+    font-size: calc(var(--detailsSection-item-font-size) - 2px);
+}
+
+@media screen and (max-width: 1200px) {
+    .movieDetails {
+        padding: 0;
+    }
+
+    .banner__text {
+        padding: 0 0 20px 20px;
+        padding-bottom: 10px;
+    }
+
+    .banner__boxShadow {
+        box-shadow: inset 40px -40px 100px #000000;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .banner__overview {
+        display: none;
+    }
+
+    .banner__title {
+        text-align: center;
+        padding-bottom: 30px;
+        font-size: 30px;
+    }
+
+    .movieDetails {
+        --banner-image-left-padding: 15%;
+        --detailsSection-item-font-size: 15px;
+        --details-image-width: 200px;
+    }
+
+}
+
+@media screen and (max-width: 650px) {
+    .detailsSection__grid {
+        grid-template-areas:
+            "image data"
+            "cast cast";
+    }
+
+    .detailsSection__dataContainer{
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* @media screen and (max-width: 500px) {
+
+    .banner__title {
+        text-align: center;
+        padding-bottom: 30px;
+        font-size: 30px;
+    }
+
+    .movieDetails {
+        --banner-image-left-padding: 10%;
+        --detailsSection-item-font-size: 15px;
+        --details-image-width: 150px;
+    }
+} */
+
+/* 
+@media screen and (max-width: 1050px) {
+    .banner__boxShadow {
+        box-shadow: inset 50px 20px 80px rgba(0, 0, 0, 1), inset 50px -20px 80px rgba(0, 0, 0, 1);
+    }
+}
+
+@media screen and (max-width: 660px) {
+    .banner__overview {
+        display: none;
+    }
+} */
